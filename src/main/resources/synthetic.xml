@@ -1,0 +1,40 @@
+<!--
+    Copyright 2020 XEBIALABS
+    Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+    The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+-->
+<synthetic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns="http://www.xebialabs.com/deployit/synthetic"
+           xsi:schemaLocation="http://www.xebialabs.com/deployit/synthetic synthetic.xsd">
+
+    <type type="xray.Server" extends="xlrelease.Configuration">
+      <property name="scriptLocation" hidden="true" default="xray/Server.py"/>
+      <property name="authenticationMethod" kind="enum" enum-class="com.xebialabs.xlrelease.domain.configuration.HttpConnection$AuthenticationMethod" default="PAT">
+        <enum-values>
+            <value>PAT</value>
+        </enum-values>
+      </property>
+      <property name="base_url" category="input" label="Xray Base URL" required="true"/>
+      <property name="token" category="input" label="Xray Authorization Token" required="true"/>
+    </type>
+
+    <type type="xray.Task" extends="xlrelease.PythonScript" virtual="true">
+      <property name="server" category="input" label="Xray Server" referenced-type="xray.Server"
+                kind="ci" required="true" description="Xray Server Configuration"/>
+      <property name="iconLocation" default="logo/xray_icon.png" hidden="true"/>
+      <property name="taskColor" hidden="true" default="lightgreen"/>
+    </type>
+
+    <type type="xray.GetReports" extends="xray.Task">
+      <property name="reportID" category="input" description="Example: 1." label="Report ID"/>
+      <property name="impactedArtifact" category="input" description="Example: docker://node-js-image:latest." label="Impacted Artifact"/>
+      <property name="cves" category="output" kind="string" size="small" label="CVEs" description="CVEs"/>
+      <property name="highSeverity" category="output" kind="string" size="small" label="High Severity Vulnerabilities" description="High Severity Vulnerabilities"/>
+      <property name="mediumSeverity" category="output" kind="string" size="small" label="Medium Severity Vulnerabilities" description="Medium Severity Vulnerabilities"/>
+      <property name="lowSeverity" category="output" kind="string" size="small" label="Low Severity Vulnerabilities" description="Low Severity Vulnerabilities"/>
+      <property name="averageCVSS2Score" category="output" kind="string" size="small" label="Average CVSS 2 Score" description="Average CVSS 2 Score"/>
+      <property name="averageCVSS3Score" category="output" kind="string" size="small" label="Average CVSS 3 Score" description="Average CVSS 3 Score"/>
+      <property name="output" category="output" kind="string" size="large" label="Output" description="Output returned from executing the Xray task."/>
+    </type>
+</synthetic>

@@ -1,0 +1,17 @@
+.gradle
+.idea
+build
+bin
+.classpath
+.settings
+.project
+.pydevproject
+.DS_*
+supervisord*
+src/test/resources/docker/xray/data/*
+src/test/resources/docker/xray/db/*
+secrets.xlvals
+supervisord.*
+xlr-xray-plugin.iml
+deploy_key
+test
