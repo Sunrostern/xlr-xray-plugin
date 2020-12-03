@@ -44,7 +44,9 @@ if r.status_code < 200 or r.status_code >= 400:
 
 # Processing response data.
 report = json.loads(r.content)
-cves = report['total_rows']
+cves = 0
+if 'total_rows' in report:
+    cves = report['total_rows']
 
 sumCVSS2 = 0
 sumCVSS3 = 0
@@ -52,15 +54,18 @@ numHigh = 0
 numMedium = 0
 numLow = 0
 
-for cve in report['rows']:         
-    sumCVSS2 += cve['cvss2_max_score']
-    sumCVSS3 += cve['cvss3_max_score']
-    if cve['severity'] == 'High':
-        numHigh += 1
-    elif cve['severity'] == 'Medium':
-        numMedium += 1
-    else:
-        numLow += 1
+for cve in report['rows']:
+    if 'cvss2_max_score' in cve:         
+        sumCVSS2 += cve['cvss2_max_score']
+    if 'cvss3_max_score' in cve:
+        sumCVSS3 += cve['cvss3_max_score']
+    if 'severity' in cve:
+        if cve['severity'] == 'High':
+            numHigh += 1
+        elif cve['severity'] == 'Medium':
+            numMedium += 1
+        else:
+            numLow += 1
 
 averageCVSS2Score = str(round(1.0 * sumCVSS2 / cves, 2)) if cves > 0 else "No Score"
 averageCVSS3Score = str(round(1.0 * sumCVSS3 / cves, 2)) if cves > 0 else "No Score"
