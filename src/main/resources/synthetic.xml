@@ -9,7 +9,7 @@
            xsi:schemaLocation="http://www.xebialabs.com/deployit/synthetic synthetic.xsd">
 
     <type type="xray.Server" extends="xlrelease.Configuration">
-      <property name="scriptLocation" hidden="true" default="xray/Server.py"/>
+      <property name="scriptLocation" hidden="true" default="xray/TestConnection.py"/>
       <property name="authenticationMethod" kind="enum" enum-class="com.xebialabs.xlrelease.domain.configuration.HttpConnection$AuthenticationMethod" default="PAT">
         <enum-values>
             <value>PAT</value>
